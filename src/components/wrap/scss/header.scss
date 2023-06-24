@@ -1,0 +1,223 @@
+#header{
+    width: 100%;
+    background: #fff;
+    position: relative;
+    z-index: 999;
+    transition: all 0.3s;
+    .container{
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        .gap{
+            width: 100%;
+            .content{
+                width: 100%;
+                margin: 0 0 0 8px;
+                .row1{
+                    width: 100%;
+                    padding: 60px 29px 10px 2px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .logo{
+                        a{
+                            img{
+                                width: 170px;
+                                height: 60px;
+                            }
+                        }
+                    }
+                    .row1-nav{
+                        margin: -4px 0 0 0;
+                        ul{
+                            display: flex;
+                            li{
+                                a{
+                                    margin: 0 0 0 13px;
+                                    position: relative;
+                                    span{
+                                        font-size: 14px;
+                                        line-height: 28px;
+                                        text-align: center;
+                                        color: #222;
+                                        font-family: 'Noto Sans KR';
+                                        font-weight: 300;
+                                        em{}
+                                    }
+                                    i{
+                                        position: absolute;
+                                        top: -25px;
+                                        left: -1px;
+                                        background: #e4e4e4;
+                                        padding: 0 7px;
+                                        line-height: 20px;
+                                        font-size: 10px;
+                                        color: #333;
+                                        border-radius: 7px;
+                                        animation: point-msg 0.3s infinite alternate;
+                                        &::after{
+                                            content: '';
+                                            position: absolute;
+                                            bottom: 0;
+                                            right: 50%;
+                                            border: 3px solid #e4e4e4;
+                                            margin: 0 -3px -3px 0;
+                                            transform: rotate(45deg);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .row2{
+                    width: 100%;
+                    padding: 0 0 17px 0;
+                    display: flex;
+                    .all-menu-btn{
+                        width: 50px;
+                        height: 50px;
+                        margin: 0 0 0 -3px;
+                        span{
+                            display: block;
+                            width: 24px;
+                            height: 2px;
+                            background: #333;
+                            &.line1{
+                                margin: 16px auto 6px auto;
+                            }
+                            &.line2{
+                                margin: 6px auto;
+                            }
+                            &.line3{
+                                margin: 6px auto 8px auto;
+                            }
+                        }
+                    }
+                    .row2-nav{
+                        ul{
+                            display: flex;
+                            li{
+                                padding: 9px 0;
+                                a{
+                                    margin: 0 14px;
+                                    span{
+                                        font-size: 20px;
+                                        color: #222;
+                                        font-weight: 500;
+                                        line-height: 32px;
+                                        font-family: 'Noto Sans KR';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .search-box{
+                        width: 201px;
+                        height: 32px;
+                        margin: 8px 0 0 413px;
+                        border-bottom: 2px solid #000;
+                        form{
+                            width: 100%;
+                            input{
+                                width: 169px;
+                                height: 32px;
+                                padding: 3px 4px;
+                                border: 0;
+                                border-bottom: 2px solid #000;
+                                outline: 0;
+                                font-size: 12px;
+                                line-height: 24px;
+                            }
+                            a{
+                                i{
+                                    width: 32px;
+                                    height: 32px;
+                                    font-size: 30px;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.row2-show{
+        position: fixed;
+        top: -130px;
+        .container{
+            .gap{
+                .content{
+                    .row1{
+                        padding: 100px 29px 0 2px;
+                        .logo{
+                            a{
+                                img{
+                                    width: 85px;
+                                    height: 30px;
+                                }
+                            }
+                        }
+                        .row1-nav{
+                            transform: translateY(-10px);
+                            ul{
+                                li{
+                                    a{
+                                        i{
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .row2{
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+    &.row1-show{
+        position: fixed;
+        top: -80px;
+        .container{
+            .gap{
+                .content{
+                    .row1{
+                        padding: 90px 29px 0 2px;
+                        .logo{
+                            a{
+                                img{
+                                    width: 85px;
+                                    height: 30px;
+                                }
+                            }
+                        }
+                        .row1-nav{
+                            transform: translateY(-10px);
+                            ul{
+                                li{
+                                    a{
+                                        i{
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .row2{
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes point-msg {
+      0%{margin-top: 5px;}
+    100%{margin-top: -1px;}
+}

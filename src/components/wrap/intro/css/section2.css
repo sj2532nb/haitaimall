@@ -1,0 +1,102 @@
+#section2 {
+  width: 100%;
+}
+#section2 .container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+#section2 .container .gap {
+  width: 100%;
+  padding: 5px 10px;
+  text-align: center;
+}
+#section2 .container .gap .title {
+  width: 100%;
+  margin: 0 10px 35px 10px;
+}
+#section2 .container .gap .title h2 {
+  width: 100%;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 140%;
+  text-align: left;
+  color: #222;
+}
+#section2 .container .gap .content {
+  width: 100%;
+}
+#section2 .container .gap .content ul {
+  width: 100%;
+  display: flex;
+}
+#section2 .container .gap .content ul li {
+  width: 25%;
+  margin: 0 10px 4% 10px;
+  text-align: left;
+}
+#section2 .container .gap .content ul li a {
+  position: relative;
+}
+#section2 .container .gap .content ul li a figure img {
+  width: auto;
+}
+#section2 .container .gap .content ul li a span {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+}
+#section2 .container .gap .content ul li a span img {
+  width: auto;
+}
+#section2 .container .gap .content ul li div h3 {
+  margin: 33px 0 14px 0;
+}
+#section2 .container .gap .content ul li div h3 a {
+  color: #222222;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22.4px;
+}
+#section2 .container .gap .content ul li div .rate-price {
+  color: #ff5da4;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  font-family: "Rubik";
+  line-height: 18px;
+}
+#section2 .container .gap .content ul li div .rate-price em {
+  font-size: 15px;
+  font-family: "Noto Sans KR";
+  letter-spacing: 0.4px;
+}
+#section2 .container .gap .content ul li div .sale-price {
+  color: #222;
+  letter-spacing: 0.2px;
+  font-size: 20px;
+  line-height: 18px;
+  font-weight: 600;
+  font-family: "Rubik";
+}
+#section2 .container .gap .content ul li div .sale-price em {
+  font-size: 13px;
+  font-family: "Noto Sans KR";
+  letter-spacing: 0.4px;
+}
+#section2 .container .gap .content ul li div strong {
+  display: block;
+}
+#section2 .container .gap .content ul li div b {
+  display: block;
+}
+#section2 .container .gap .content ul li div > em {
+  display: inline-block;
+}
+#section2 .container .gap button {
+  width: 202px;
+  height: 48px;
+  border: 1px solid #000;
+  background: #fff;
+  margin: 0 0 95px 0;
+}

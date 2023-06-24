@@ -1,0 +1,43 @@
+#topModal{
+    width: 100%;
+    background: #fff0ed;
+    position: relative;
+    z-index: 900;
+    transition: all 0.3s;
+    .container{
+        width: 100%;
+        max-width: 1360px;
+        margin: 0 auto;
+        .gap{
+            width: 100%;
+            .content{
+                width: 100%;
+                .slide-container{
+                    .slide-view{
+                        .slide-wrap{
+                            .slide{
+                                a{
+                                    img{}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .top-modal-close-btn{
+        position: absolute;
+        top: 30%;
+        right: 15px;
+        width: 35px;
+        height: 35px;
+        img{
+            width: 100%;
+        }
+    }
+    &.on{
+        position: fixed;
+        top: -85px;
+    }
+}
