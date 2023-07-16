@@ -10,6 +10,10 @@ import Sub4Component from './wrap/sub/Sub4Component';
 import Sub5Component from './wrap/sub/Sub5Component';
 import Sub6Component from './wrap/sub/Sub6Component';
 import Sub7Component from './wrap/sub/Sub7Component';
+import SignUpComponent from './wrap/members/SignUpComponent';
+import SignInComponent from './wrap/members/SignInComponent';
+import MyPageComponent from './wrap/members/MyPageComponent';
+import ProductComponent from './wrap/ProductComponent';
 import FooterComponent from './wrap/FooterComponent';
 
 export default function WrapComponent(){
@@ -28,6 +32,10 @@ export default function WrapComponent(){
                         <Route path='/sub5' element={<Sub5Component/>}/>
                         <Route path='/sub6' element={<Sub6Component/>}/>
                         <Route path='/sub7' element={<Sub7Component/>}/>
+                        <Route path='/signup' element={<SignUpComponent/>}/>
+                        <Route path='/signin' element={<SignInComponent/>}/>
+                        <Route path='/mypage' element={<MyPageComponent/>}/>
+                        <Route path='/product' element={<ProductComponent/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

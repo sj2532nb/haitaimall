@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './scss/section2.scss';
 
 export default function Section2Component(){
@@ -12,10 +13,10 @@ export default function Section2Component(){
                     <div className="content">
                         <ul>
                             <li>
-                                <a href="!#">
+                                <Link to='/product'>
                                     <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
                                     <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                </a>
+                                </Link>
                                 <div>
                                     <h3><a href="!#">홈런볼바나나스플릿</a></h3>
                                     <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>

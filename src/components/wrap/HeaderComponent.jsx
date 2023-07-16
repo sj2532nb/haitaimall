@@ -7,6 +7,17 @@ export default function HeaderComponent(){
 
     const [isRow1Show, setIsRow1Show] = React.useState(false);
     const [isRow2Show, setIsRow2Show] = React.useState(false);
+    const [isAllMenu, setIsAllMenu] = React.useState(false);
+
+    const onClickAllMenuOpen=(e)=>{
+        e.preventDefault();
+        if(isAllMenu===true){
+            setIsAllMenu(false);
+        }
+        else if(isAllMenu===false){
+            setIsAllMenu(true);
+        }
+    }
 
     React.useEffect(()=>{
 
@@ -50,16 +61,16 @@ export default function HeaderComponent(){
                                 </div>
                                 <div className="row1-nav">
                                     <ul>
-                                        <li><a href="!#"><span>회원가입</span><i>+1,000P</i></a></li>
-                                        <li><a href="!#"><span>로그인</span></a></li>
-                                        <li><a href="!#"><span>장바구니</span><em></em></a></li>
-                                        <li><a href="!#"><span>마이페이지</span></a></li>
+                                        <li><Link to='/signup'><span>회원가입</span><i>+1,000P</i></Link></li>
+                                        <li><Link to='/signin'><span>로그인</span></Link></li>
+                                        <li><a href="!#"><span>장바구니</span><em>2</em></a></li>
+                                        <li><Link to='/mypage'><span>마이페이지</span></Link></li>
                                         <li><a href="!#"><span>고객센터</span></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div className="row2">
-                                <div className="all-menu-btn">
+                                <div onClick={onClickAllMenuOpen} className={`all-menu-btn ${isAllMenu?'on':''}`}>
                                     <a href="!#">
                                         <span className='line1'></span>
                                         <span className='line2'></span>
@@ -78,7 +89,7 @@ export default function HeaderComponent(){
                                     </ul>
                                 </div>
                                 <div className="search-box">
-                                    <form name='search-form' id='searchForm' action="">
+                                    <form>
                                         <input type="text" name='search-form' id='searchForm' placeholder='' />
                                         <a href="!#">
                                             <i className='material-icons'>&#xe8b6;</i>
@@ -89,6 +100,64 @@ export default function HeaderComponent(){
                         </div>
                     </div>
                 </div>
+                {
+                    isAllMenu &&
+                        <div className="all-menu-box">
+                            <div className="all-menu-container">
+                                <div className="left">
+                                    <ul className='col1'>
+                                        <li><a href="!#"><span>선물하기🎁</span></a></li>
+                                        <li><a href="!#"><span>캐릭터</span></a></li>
+                                        <li><a href="!#"><span>이벤트</span></a></li>
+                                        <li><a href="!#"><span>레시피</span></a></li>
+                                    </ul>
+                                    <ul className='col2'>
+                                        <li><a href="!#"><span>NEW & HOT</span></a></li>
+                                        <li><a href="!#">NEW</a></li>
+                                        <li><a href="!#">HOT</a></li>
+                                    </ul>
+                                    <ul className='col3'>
+                                        <li><a href="!#"><span>골라담기</span></a></li>
+                                        <li><a href="!#">비스켓</a></li>
+                                        <li><a href="!#">스낵</a></li>
+                                        <li><a href="!#">초코</a></li>
+                                        <li><a href="!#">껌</a></li>
+                                        <li><a href="!#">캔디&젤리</a></li>
+                                        <li><a href="!#">묶음상품</a></li>
+                                    </ul>
+                                    <ul className='col4'>
+                                        <li><a href="!#"><span>선물세트</span></a></li>
+                                        <li><a href="!#">종합선물세트</a></li>
+                                        <li><a href="!#">간식선물세트</a></li>
+                                        <li><a href="!#">어린이 만들기세트</a></li>
+                                        <li><a href="!#">어린이 선물세트</a></li>
+                                        <li><a href="!#">만두선물세트</a></li>
+                                        <li><a href="!#">대량구매 (BOX)</a></li>
+                                    </ul>
+                                </div>
+                                <div className="right">
+                                    <ul>
+                                        <li><a href="!#">자주묻는질문</a></li>
+                                        <li><a href="!#">공지사항</a></li>
+                                        <li><a href="!#">상품 Q&A</a></li>
+                                        <li><a href="!#">레시피</a></li>
+                                        <li><a href="!#">이벤트</a></li>
+                                    </ul>
+                                    <div className="header-slide-box">
+                                        <div className="slide-container">
+                                            <div className="slide-view">
+                                                <ul className="slide-wrap">
+                                                    <li className="slide slide2"><a href="!#"><img src="./img/bn_side1_1.jpg" alt="" /></a></li>
+                                                    <li className="slide slide1"><a href="!#"><img src="./img/bn_side1_1.jpg" alt="" /></a></li>
+                                                    <li className="slide slide2"><a href="!#"><img src="./img/bn_side1_1.jpg" alt="" /></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                }
             </header>
             <Outlet/>
         </>
