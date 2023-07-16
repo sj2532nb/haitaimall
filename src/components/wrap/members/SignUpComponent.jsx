@@ -1,7 +1,338 @@
 import React from 'react';
+import axios from 'axios';
 import './scss/signup.scss';
 
 export default function SignUpComponent(){
+
+    const [state, setState] = React.useState({
+        아이디:'',
+        isIdErr:false,
+        idErrMsg:'',
+        비밀번호:'',
+        isPwErr:false,
+        pwErrMsg:'',
+        비밀번호확인:'',
+        isPwChkErr:false,
+        pwChkErrMsg:'',
+        이름:'',
+        isNameErr:false,
+        nameErrMsg:'',
+        휴대전화:'',
+        isHpErr:false,
+        hpErrMsg:'',
+        이메일:'',
+        isEmailErr:false,
+        emailErrMsg:'',
+        전체이용약관:[
+            "이용약관 동의(필수)",
+            "개인정보처리방침 동의 (필수)",
+            "SMS 수신 동의 (선택)",
+            "이메일 수신 동의 (선택)"
+        ],
+        이용약관체크:[]
+    });
+
+    const {아이디, isIdErr, idErrMsg, 비밀번호, isPwErr, pwErrMsg, 비밀번호확인, isPwChkErr, pwChkErrMsg, 이름, isNameErr, nameErrMsg, 휴대전화, isHpErr, hpErrMsg, 이메일, isEmailErr, emailErrMsg, 전체이용약관, 이용약관체크} = state;
+
+    // 아이디
+    const onChangeUserId=(e)=>{
+        const {value} = e.target;
+        // 1. 영문소문자, 숫자만 가능
+        // 2. 4~16자
+        const regExp1 = /[`~!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]/g;  // 특수문자
+        const regExp2 = /^(.){4,16}$/g;  // 4자 이상 16자 이하
+        const regExp3 = /[가-힣ㄱ-ㅎㅏ-ㅣ]/g;  // 한글
+        const regExp4 = /[a-z]+[0-9]*/g;  // 영문소문자필수 1자이상 +, 숫자선택 0자이상 *
+        const regExp5 = /\s/g;  // 공백
+
+        let 아이디 = '';
+        let isIdErr = false;
+        let idErrMsg = '';
+
+        아이디 = value.replace(regExp1, '');  // 특수문자 입력 방지
+
+        // 4~16글자 아닐 경우
+        // 한글 사용했을 경우
+        // 영문 소문자, 숫자 미포함
+        // 공백 입력했을 경우
+        if(value===''){
+            isIdErr = true;
+            idErrMsg = '아이디를 입력해 주세요';
+        }
+        else if( regExp2.test(value)===false || regExp3.test(value)===true || regExp4.test(value)===false || regExp5.test(value)===true){
+            isIdErr = true;
+            idErrMsg = '대문자/공백/특수문자가 포함되었거나, 숫자로만 이루어진 아이디는 사용할 수 없습니다.';
+        }
+        else{
+            axios({
+
+            })
+            .then((res)=>{
+
+            })
+            .catch((err)=>{
+                console.log('AXIOS 실패' + err);
+            })
+        }
+
+        setState({
+            ...state,
+            아이디:아이디,
+            isIdErr:isIdErr,
+            idErrMsg:idErrMsg
+        })
+    }
+
+    // 비밀번호
+    const onChangeUserPw=(e)=>{
+        const {value} = e.target;
+        // 1. 대소문자/숫자/특수문자 중 2가지 이상 조합
+        //    입력 가능 특수문자
+        //     ~ ` ! @ # $ % ^ ( ) * _ - = { } [ ] | ; : < > , . ? /
+        // 2. 10~16자
+        // 3. 공백 입력 불가능
+        // 4. 아이디 포함 불가능
+        // 5. 연속된 문자/숫자 불가능
+        const regExp1 = /([A-Za-z]+[0-9]+)+|([0-9]+[A-Za-z]+)+|([A-Za-z]+[`~!@#$%^*()\-_=[{\]}\\|;:,<.>/?]+)+|([`~!@#$%^*()\-_=[{\]}\\|;:,<.>/?]+[A-Za-z]+)+|([0-9]+[`~!@#$%^*()\-_=[{\]}\\|;:,<.>/?]+)+|([`~!@#$%^*()\-_=[{\]}\\|;:,<.>/?]+[0-9]+)+/g;
+        const regExp2 = /^(.){10,16}$/g;  // 4자 이상 16자 이하
+        const regExp3 = /\s/g;  // 공백
+        const regExp4 = /아이디/g;
+        const regExp5 = /(.)\1/g;  // 동일한 문자숫자 연속
+        const regExp6 = /[가-힣ㄱ-ㅎㅏ-ㅣ]/g;  // 한글
+
+        let isPwErr = false;
+        let pwErrMsg = '';
+
+        if(regExp1.test(value)===false || regExp2.test(value)===false || regExp3.test(value)===true || regExp4.test(value)===true || regExp5.test(value)===true || regExp6.test(value)===true){
+            isPwErr = true;
+            pwErrMsg = 'pwErrMsg';
+        }
+        else{
+            isPwErr = false;
+            pwErrMsg = '';
+        }
+
+        setState({
+            ...state,
+            비밀번호:value,
+            isPwErr:isPwErr,
+            pwErrMsg:pwErrMsg
+        })
+    }
+
+    // 비밀번호 확인
+    const onChangeUserPwChk=(e)=>{
+        const {value} = e.target;
+        let isPwChkErr = false;
+        let pwChkErrMsg = '';
+
+        if(value!==비밀번호){
+            isPwChkErr = true;
+            pwChkErrMsg = '비밀번호가 일치하지 않습니다.';
+        }
+        else{
+            isPwChkErr = false;
+            pwChkErrMsg = '';
+        }
+        setState({
+            ...state,
+            비밀번호확인: value,
+            isPwChkErr: isPwChkErr,
+            pwChkErrMsg: pwChkErrMsg
+        })
+    }
+
+    // 이름
+    const onChangeUserName=(e)=>{
+        const {value} = e.target;
+        const regExp = /[`~!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]/g;
+
+        let 이름 = '';
+        let isNameErr = false;
+        let nameErrMsg = '';
+
+        이름 = value.replace(regExp, '');
+
+        if(이름===''){
+            isNameErr = true;
+            nameErrMsg = '이름을 입력해 주세요';
+        }
+        else{
+            isNameErr = false;
+            nameErrMsg = '';
+        }
+
+        setState({
+            ...state,
+            이름: 이름,
+            isNameErr: isNameErr,
+            nameErrMsg: nameErrMsg
+        })
+    }
+
+    // 휴대전화
+    const onChangeUserHp=(e)=>{
+        const {value} = e.target;
+        // 1. 숫자만 입력가능
+        // 2. 01[0-9] ~
+        const regExp1 = /[^\d]/g;  // 숫자가 아닌 것
+        const regExp2 = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/g;
+
+        let 휴대전화 = '';
+        let isHpErr = false;
+        let hpErrMsg = '';
+
+        휴대전화 = value.replace(regExp1, '');
+
+        if(휴대전화===''){
+            isHpErr = true;
+            hpErrMsg = '휴대폰 번호를 입력하세요.';
+        }
+        else if(regExp2.test(value)===false){
+            isHpErr = true;
+            hpErrMsg = '유효한 휴대폰 번호를 입력해 주세요';
+        }
+        else{
+            isHpErr = false;
+            hpErrMsg = '';
+        }
+
+        setState({
+            ...state,
+            휴대전화: 휴대전화,
+            isHpErr: isHpErr,
+            hpErrMsg: hpErrMsg,
+        })
+    }
+
+    // 이메일
+    const onChangeUserEmail=(e)=>{
+        const {value} = e.target;
+        const regExp = /^[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/?]+(\.)?[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/?]*@[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/\.?]+\.[a-z]{2,3}$/gi;
+        
+        let isEmailErr = false;
+        let emailErrMsg = '';
+
+        if(value===''){
+            isEmailErr = true;
+            emailErrMsg = '이메일을 입력해 주세요.';
+        }
+        else if(regExp.test(value)===false){
+            isEmailErr = true;
+            emailErrMsg = '유효한 이메일을 입력해 주세요.';
+        }
+        else{
+            isEmailErr = false;
+            emailErrMsg = '';
+        }
+
+        setState({
+            ...state,
+            이메일: value,
+            isEmailErr: isEmailErr,
+            emailErrMsg: emailErrMsg
+        })
+    }
+
+    // 이용약관 전체 체크
+    const onChangeAgreeAll=(e)=>{
+        let 이용약관체크 = [];
+        if(e.target.checked===true){
+            이용약관체크 = 전체이용약관;
+        }
+        else{
+            이용약관체크 = [];
+        }
+        setState({
+            ...state,
+            이용약관체크:이용약관체크
+        })
+    }
+
+    // 이용약관 개별 체크
+    const onChangeEachAgree=(e)=>{
+        if(e.target.checked===true){  // 체크되면 개별체크 선택항목 value 값을 이용약관동의 배열에 저장(누적)시킨다.
+            setState({
+                ...state,
+                이용약관체크: [...이용약관체크, e.target.value]
+            })
+        }
+        else{  // 체크 안되면 개별체크 선택항목 value 값을 이용약관동의 배열에서 삭제시킨다.
+            setState({
+                ...state,
+                이용약관체크: 이용약관체크.filter((item)=>item!==e.target.value)
+            })
+        }
+    }
+
+    // 가입하기 버튼 클릭
+    const onSubmitSignUp=(e)=>{
+        e.preventDefault();
+
+        let cnt=0;
+        이용약관체크.map((item)=>{
+            if(item.indexOf('필수')!==-1){
+                cnt++;
+            }
+        });
+
+        // 최종 유효성 검사
+        if(아이디===''){
+            alert('아이디를 입력하세요');
+        }
+        else if(비밀번호===''){
+            alert('비밀번호를 입력하세요');
+        }
+        else if(비밀번호확인===''){
+            alert('비밀번호를 한번 더 입력하세요');
+        }
+        else if(이름===''){
+            alert('이름을 입력하세요');
+        }
+        else if(휴대전화===''){
+            alert('휴대전화를 입력하세요');
+        }
+        else if(이메일===''){
+            alert('이메일을 입력하세요');
+        }
+        else if(cnt<2){
+            alert('이용약관에 동의하세요');
+        }
+        else{
+            const regExpHp = /^(\d{3})(\d{3,4})(\d{4})$/g;
+
+            let 약관동의 = '';
+            이용약관체크.map((item, idx)=>{
+                if(idx===이용약관체크.length-1){
+                    약관동의 += item
+                }
+                else{
+                    약관동의 += item + ', '
+                }
+            })
+
+            let formData = {
+                "userId": 아이디,
+                "userPw": 비밀번호,
+                "userName": 이름,
+                "userHp": 휴대전화.replace(regExpHp, '$1-$2-$3'),
+                "userEmail": 이메일,
+                "userAgree": 약관동의
+            }
+
+            axios({
+                
+            })
+            .then((res)=>{
+
+            })
+            .catch((err)=>{
+                console.log('AXIOS 실패' + err);
+            })
+        }
+    }
+
+
     return (
         <div id='signUp'>
             <div className="container">
@@ -15,68 +346,68 @@ export default function SignUpComponent(){
                         </p>
                     </div>
                     <div className="content">
-                        <form name='signUpForm' id='signUpForm' action="">
+                        <form onSubmit={onSubmitSignUp} name='signUpForm' id='signUpForm' action="">
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>
                                             <h4>아이디</h4>
-                                            <input type="text" name='userId' id='userId' />
-                                            <p><span></span>(영문소문자/숫자, 4~16자)</p>
+                                            <input minLength={4} maxLength={16} onChange={onChangeUserId} type="text" name='userId' id='userId' value={아이디}/>
+                                            <p><span className={`id-err-msg ${isIdErr?' on':''}`}>{idErrMsg}</span>(영문소문자/숫자, 4~16자)</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h4>비밀번호</h4>
-                                            <input type="text" name='userPw' id='userPw' />
-                                            <p><span></span>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)</p>
+                                            <input minLength={10} maxLength={16} onChange={onChangeUserPw} type="text" name='userPw' id='userPw' value={비밀번호}/>
+                                            <p><span className={`pw-err-msg ${isPwErr?' on':''}`}>{pwErrMsg}</span>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h4>비밀번호 확인</h4>
-                                            <input type="text" name='userPwChk' id='userPwChk' />
-                                            <p><span></span></p>
+                                            <input minLength={10} maxLength={16} onChange={onChangeUserPwChk} type="text" name='userPwChk' id='userPwChk' value={비밀번호확인}/>
+                                            <p><span className={`pwChk-err-msg ${isPwChkErr?' on':''}`}>{pwChkErrMsg}</span></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h4>이름</h4>
-                                            <input type="text" name='userName' id='userName' />
-                                            <p><span></span></p>
+                                            <input maxLength={30} onChange={onChangeUserName} type="text" name='userName' id='userName' value={이름}/>
+                                            <p><span className={`name-err-msg ${isNameErr?' on':''}`}>{nameErrMsg}</span></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h4>휴대전화</h4>
-                                            <input type="text" name='userHp' id='userHp' />
-                                            <p><span></span></p>
+                                            <input maxLength={11} onChange={onChangeUserHp} type="text" name='userHp' id='userHp' value={휴대전화}/>
+                                            <p><span className={`hp-err-msg ${isHpErr?' on':''}`}>{hpErrMsg}</span></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h4>이메일</h4>
-                                            <input type="text" name='userEmail' id='userEmail' />
-                                            <p><span></span></p>
+                                            <input maxLength={250} onChange={onChangeUserEmail} type="text" name='userEmail' id='userEmail' value={이메일}/>
+                                            <p><span className={`email-err-msg ${isEmailErr?' on':''}`}>{emailErrMsg}</span></p>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div className="agree-box">
                                 <div className="all-check-box">
-                                    <h4><input type="checkbox" /><label>전체 동의</label></h4>
+                                    <h4><label><input onChange={onChangeAgreeAll} type="checkbox" name='agreeAll' id='agreeAll' value={'전체 동의'} checked={이용약관체크.length===전체이용약관.length}/>전체 동의</label></h4>
                                     <p>이용약관, 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두 동의합니다.</p>
                                 </div>
                                 <div className="each-check-box">
                                     <div className="required-check-box">
-                                        <h4><input type="checkbox" /><label>이용약관 동의(필수)</label></h4>
+                                        <h4><label><input onChange={onChangeEachAgree} type="checkbox" name='agree1' id='agree1' value={'이용약관 동의(필수)'} checked={이용약관체크.includes('이용약관 동의(필수)')}/>이용약관 동의(필수)</label></h4>
                                         <div className="agree-content">
                                             <h5>제 1 조 | 수집하는 개인정보의 항목 및 수집방법</h5>
                                             <br />
                                             <p>
                                                 ① 수집하는 개인정보 항목
                                                 <br />
-                                                ○ 필수항목 : 이름, 아이디, 비밀번호, 이메일, 휴대폰번호
+                                                ○ 필수항목 : 이름, 아이디, 비밀번호, 이메일, 휴대전화번호
                                                 <br />
                                                 ○ 선택사항 : 주소
                                                 <br />
@@ -360,7 +691,7 @@ export default function SignUpComponent(){
                                         </div>
                                     </div>
                                     <div className="required-check-box">
-                                        <h4><input type="checkbox" /><label>개인정보처리방침 동의 (필수)</label></h4>
+                                        <h4><label><input onChange={onChangeEachAgree} type="checkbox" name='agree2' id='agree2' value={'개인정보처리방침 동의 (필수)'} checked={이용약관체크.includes('개인정보처리방침 동의 (필수)')}/>개인정보처리방침 동의 (필수)</label></h4>
                                         <div className="agree-content">
                                             <p>
                                                 1.1(총칙)
@@ -401,7 +732,7 @@ export default function SignUpComponent(){
                                                 1.3(개인정보 수집항목 및 이용목적)
                                                 <br />
                                                 <br />
-                                                해태제과식품(주)은 회원가입시 또는 물품 주문시 아래의 개인정보 항목을 다음과 같은 목적을 위하여 수집하고 있습니다. 단, 고객의 개인정보를 수집하는 경우에는 그 목적에 필요한 최소한의 개인정보를 수집하고 있습니다. 필수항목 : 이름, 이메일, 비밀번호, 휴대폰 (회원제 서비스 이용에 따른 본인 식별 절차 등에 이용)
+                                                해태제과식품(주)은 회원가입시 또는 물품 주문시 아래의 개인정보 항목을 다음과 같은 목적을 위하여 수집하고 있습니다. 단, 고객의 개인정보를 수집하는 경우에는 그 목적에 필요한 최소한의 개인정보를 수집하고 있습니다. 필수항목 : 이름, 이메일, 비밀번호, 휴대전화 (회원제 서비스 이용에 따른 본인 식별 절차 등에 이용)
                                                 <br />
                                                 <br />
                                                 선택항목 : 주소 (고지사항 전달, 상품 배송에 이용)
@@ -781,7 +1112,7 @@ export default function SignUpComponent(){
                                                 <br />
                                                 【 민원처리센터 】 전자우편 : htmall@ht.co.kr
                                                 <br />
-                                                (내용을 보내실 때 연락 가능한 전화, 휴대폰 번호를 적어 주시면 감사하겠습니다.)
+                                                (내용을 보내실 때 연락 가능한 전화, 휴대전화 번호를 적어 주시면 감사하겠습니다.)
                                                 <br />
                                                 <br />
                                                 전화번호 : 080-235-6677
@@ -877,8 +1208,8 @@ export default function SignUpComponent(){
                                     </div>
                                     <div className="required-check-box">
                                         <ul>
-                                            <li><h4><input type="checkbox" /><label>SMS 수신 동의 (선택)</label></h4></li>
-                                            <li><h4><input type="checkbox" /><label>이메일 수신 동의 (선택)</label></h4></li>
+                                            <li><h4><label><input onChange={onChangeEachAgree} type="checkbox" name='agree3' id='agree3' value={'SMS 수신 동의 (선택)'} checked={이용약관체크.includes('SMS 수신 동의 (선택)')}/>SMS 수신 동의 (선택)</label></h4></li>
+                                            <li><h4><label><input onChange={onChangeEachAgree} type="checkbox" name='agree4' id='agree4' value={'이메일 수신 동의 (선택)'} checked={이용약관체크.includes('이메일 수신 동의 (선택)')}/>이메일 수신 동의 (선택)</label></h4></li>
                                         </ul>
                                         <div className="agree-content">
                                             <p>
