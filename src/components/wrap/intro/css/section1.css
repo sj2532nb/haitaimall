@@ -22,7 +22,6 @@
   width: 100%;
   height: 100%;
   padding: 0 10px;
-  margin: 0 0 0 -10px;
 }
 #section1 .container .gap .content .slide-container .slide-view .slide-wrap {
   width: 900%;
@@ -59,7 +58,6 @@
   width: 100%;
   height: 18px;
   text-align: center;
-  margin: 0 0 0 -8px;
 }
 #section1 .container .gap .content .page-btn-box .page-btn {
   width: 20px;

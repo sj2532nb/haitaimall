@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #section2 {
   width: 100%;
 }
@@ -9,6 +10,7 @@
 #section2 .container .gap {
   width: 100%;
   padding: 5px 10px;
+  margin: 0 0 95px 0;
   text-align: center;
 }
 #section2 .container .gap .title {
@@ -35,22 +37,47 @@
   margin: 0 10px 4% 10px;
   text-align: left;
 }
+#section2 .container .gap .content ul li:hover .cart-img {
+  bottom: 15px;
+  opacity: 1;
+}
 #section2 .container .gap .content ul li a {
   position: relative;
+}
+#section2 .container .gap .content ul li a figure {
+  display: block;
+  position: relative;
+}
+#section2 .container .gap .content ul li a figure::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../../../../../public/img/image_custom_316252116938702.png) no-repeat 100% 0;
 }
 #section2 .container .gap .content ul li a figure img {
   width: auto;
 }
-#section2 .container .gap .content ul li a span {
+#section2 .container .gap .content ul li a .cart-img {
   position: absolute;
-  bottom: 0;
-  left: 50%;
+  bottom: -37px;
+  left: 45%;
+  width: 37px;
+  height: 37px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
 }
-#section2 .container .gap .content ul li a span img {
-  width: auto;
+#section2 .container .gap .content ul li a .cart-img img {
+  width: 26px;
+  height: 26px;
+  transform: translate(5px, 6px);
 }
 #section2 .container .gap .content ul li div h3 {
-  margin: 33px 0 14px 0;
+  margin: 33px 0 10px 0;
 }
 #section2 .container .gap .content ul li div h3 a {
   color: #222222;
@@ -76,7 +103,7 @@
   letter-spacing: 0.2px;
   font-size: 20px;
   line-height: 18px;
-  font-weight: 600;
+  font-weight: 700;
   font-family: "Rubik";
 }
 #section2 .container .gap .content ul li div .sale-price em {
@@ -84,19 +111,62 @@
   font-family: "Noto Sans KR";
   letter-spacing: 0.4px;
 }
+#section2 .container .gap .content ul li div .price {
+  color: #a0a0a0;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  font-family: "Rubik";
+  line-height: 18px;
+  position: relative;
+  padding: 0 0 0 12px;
+}
+#section2 .container .gap .content ul li div .price::after {
+  content: "← ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 8px;
+}
+#section2 .container .gap .content ul li div .price em {
+  font-size: 13px;
+}
 #section2 .container .gap .content ul li div strong {
   display: block;
+  color: #208e38;
+  font-size: 14px;
+  margin: 8px 0 0 0;
+  font-weight: 300;
+  line-height: 140%;
+}
+#section2 .container .gap .content ul li div strong em {
+  font-weight: 700;
+  letter-spacing: -0.14px;
 }
 #section2 .container .gap .content ul li div b {
   display: block;
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  line-height: 140%;
+  color: #898989;
 }
 #section2 .container .gap .content ul li div > em {
   display: inline-block;
+  font-size: 11px;
+  line-height: 18px;
+  padding: 0 5px;
+  margin: 5px 3px 9px 0;
+  background: #f5f6f9;
+  color: #191a1d;
+  font-weight: 300;
 }
-#section2 .container .gap button {
+#section2 .container .gap .more-btn-box {
+  text-align: center;
+}
+#section2 .container .gap .more-btn-box button {
   width: 202px;
   height: 48px;
   border: 1px solid #000;
   background: #fff;
-  margin: 0 0 95px 0;
+  cursor: pointer;
 }

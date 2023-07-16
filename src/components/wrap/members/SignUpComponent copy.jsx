@@ -63,9 +63,39 @@ export default function SignUpComponent(){
             isIdErr = true;
             idErrMsg = '대문자/공백/특수문자가 포함되었거나, 숫자로만 이루어진 아이디는 사용할 수 없습니다.';
         }
-        else {
-            isIdErr = false;
-            idErrMsg = '';
+        else{
+            axios({
+                url: '/member/idCheckAction.jsp',
+                method: 'POST',
+                data: {},
+                params: {
+                    "userId": 아이디
+                }
+            })
+            .then((res)=>{
+                try {
+                    if(res.data===true){
+                        setState({
+                            ...state,
+                            isIdErr: true,
+                            idErrMsg: '이미 존재하는 아이디입니다.'
+                        })
+                    }
+                    else{
+                        setState({
+                            ...state,
+                            isIdErr: false,
+                            idErrMsg: ''
+                        })
+                    }
+                } 
+                catch (error) {
+                    console.log(error);
+                }
+            })
+            .catch((err)=>{
+                console.log('AXIOS 실패' + err);
+            })
         }
 
         setState({
@@ -98,7 +128,7 @@ export default function SignUpComponent(){
 
         if(regExp1.test(value)===false || regExp2.test(value)===false || regExp3.test(value)===true || regExp4.test(value)===true || regExp5.test(value)===true || regExp6.test(value)===true){
             isPwErr = true;
-            pwErrMsg = '비밀번호 입력 조건을 확인해주세요';
+            pwErrMsg = 'pwErrMsg';
         }
         else{
             isPwErr = false;
@@ -201,7 +231,7 @@ export default function SignUpComponent(){
     // 이메일
     const onChangeUserEmail=(e)=>{
         const {value} = e.target;
-        const regExp = /^[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/?]+(\.)?[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/?]*@[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/.?]+\.[a-z]{2,3}$/gi;
+        const regExp = /^[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/?]+(\.)?[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/?]*@[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ`~!#$%^&*\-_=+{}|'/\.?]+\.[a-z]{2,3}$/gi;
         
         let isEmailErr = false;
         let emailErrMsg = '';
@@ -294,53 +324,34 @@ export default function SignUpComponent(){
         else{
             const regExpHp = /^(\d{3})(\d{3,4})(\d{4})$/g;
 
-            // let 약관동의 = '';
-            // 이용약관체크.map((item, idx)=>{
-            //     if(idx===이용약관체크.length-1){
-            //         약관동의 += item
-            //     }
-            //     else{
-            //         약관동의 += item + ', '
-            //     }
-            // })
+            let 약관동의 = '';
+            이용약관체크.map((item, idx)=>{
+                if(idx===이용약관체크.length-1){
+                    약관동의 += item
+                }
+                else{
+                    약관동의 += item + ', '
+                }
+            })
 
-            // let formData = {
-            //     "userId": 아이디,
-            //     "userPw": 비밀번호,
-            //     "userName": 이름,
-            //     "userHp": 휴대전화.replace(regExpHp, '$1-$2-$3'),
-            //     "userEmail": 이메일
-            // }
+            let formData = {
+                "userId": 아이디,
+                "userPw": 비밀번호,
+                "userName": 이름,
+                "userHp": 휴대전화.replace(regExpHp, '$1-$2-$3'),
+                "userEmail": 이메일,
+                "userAgree": 약관동의
+            }
 
             axios({
                 url: '/member/signUpAction.jsp',
                 method: 'POST',
                 data: {},
-                params: {
-                    "userId": 아이디,
-                    "userPw": 비밀번호,
-                    "userName": 이름,
-                    "userHp": 휴대전화.replace(regExpHp, '$1-$2-$3'),
-                    "userEmail": 이메일
-                }
+                params: formData
             })
             .then((res)=>{
-                if(res.status===200){
-                    console.log(res);
-                    console.log(res.data);
-                    console.log('AXIOS 성공');
-                    const result = res.data;
-                    try {                    
-                        if( result === -1 ){
-                            alert('이미 존재하는 아이디 입니다.');                                               
-                        }
-                        else{
-                            alert('회원가입 성공');
-                        }
-                    } 
-                    catch (error) {
-                        console.log( error );
-                    }
+                if(res.readyState===4 && res.status===200){
+                    window.location.pathname="/intro";
                 }
             })
             .catch((err)=>{
@@ -363,7 +374,7 @@ export default function SignUpComponent(){
                         </p>
                     </div>
                     <div className="content">
-                        <form>
+                        <form onSubmit={onSubmitSignUp} name='signUpForm' id='signUpForm' method='post' action="./signUpAction.jsp">
                             <table>
                                 <tbody>
                                     <tr>
@@ -1243,7 +1254,7 @@ export default function SignUpComponent(){
                                 </div>
                             </div>
                             <div className="button-box">
-                                <button onClick={onSubmitSignUp} type='submit'>회원가입</button>
+                                <button type='submit'>회원가입</button>
                             </div>
                         </form>
                     </div>
