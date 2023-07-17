@@ -36,7 +36,7 @@
 %>			
 			<script>
 				alert("로그인 성공");
-				location.href="./index.jsp";
+				location.href="./update.jsp";
 			</script>			
 <%			
 		}		

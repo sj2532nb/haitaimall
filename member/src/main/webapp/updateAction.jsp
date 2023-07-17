@@ -31,20 +31,20 @@
 			UserDAO userDAO = new UserDAO();
 			int result = userDAO.update(userDTO);
 			if(result>=1){				
-	%>			
+	%>
 				<script>
 					alert("회원정보수정 완료");
-					location.href="./index.jsp";
+					location.href="./signUp.jsp";
 				</script>
-	<%	
+	<%
 			}
 			else {
-	%>			
+	%>
 				<script>
 					alert("회원정보수정 실패");
 					history.go(-1);
 				</script>
-	<%	
+	<%
 			}
 			
 		}

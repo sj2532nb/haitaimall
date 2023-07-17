@@ -55,6 +55,30 @@ export default function Sub5Component(){
     },[]);
 
 
+    const [isSubCate, setIsSubCate] = React.useState(false);
+    const [isSortBy, setIsSortBy] = React.useState(false);
+
+    const onClickSubCategory=(e)=>{
+        e.preventDefault();
+        if(isSubCate===true){
+            setIsSubCate(false);
+        }
+        else{
+            setIsSubCate(true);
+        }
+    }
+
+    const onClickSortBy=(e)=>{
+        e.preventDefault();
+        if(isSortBy===true){
+            setIsSortBy(false);
+        }
+        else{
+            setIsSortBy(true);
+        }
+    }
+
+
     return (
         <div id='sub5'>
             <div className="container">
@@ -113,35 +137,41 @@ export default function Sub5Component(){
                                 <p><a href="!#">캐릭터</a></p>
                                 <i>/</i>
                                 <div className="sub-category">
-                                    <a href="!#"><span>모두보기</span></a>
-                                    <div>
-                                        <ul>
-                                            <li><a href="!#">모두보기</a></li>
-                                            <li><a href="!#">허비</a></li>
-                                            <li><a href="!#">티토</a></li>
-                                            <li><a href="!#">맛깨비</a></li>
-                                            <li><a href="!#">예쓰</a></li>
-                                            <li><a href="!#">차유식</a></li>
-                                            <li><a href="!#">RO(로)</a></li>
-                                            <li><a href="!#">맘두</a></li>
-                                        </ul>
-                                    </div>
+                                    <a onClick={onClickSubCategory} href="!#"><span>모두보기</span></a>
+                                    {
+                                        isSubCate &&
+                                        <div>
+                                            <ul>
+                                                <li><a href="!#">모두보기</a></li>
+                                                <li><a href="!#">허비</a></li>
+                                                <li><a href="!#">티토</a></li>
+                                                <li><a href="!#">맛깨비</a></li>
+                                                <li><a href="!#">예쓰</a></li>
+                                                <li><a href="!#">차유식</a></li>
+                                                <li><a href="!#">RO(로)</a></li>
+                                                <li><a href="!#">맘두</a></li>
+                                            </ul>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             <p><strong>35</strong>개</p>
                             <div className="sort-by">
-                                <a href="!#"><span>정렬 기준</span></a>
-                                <div>
-                                    <ul>
-                                        <li><a href="!#">신상품</a></li>
-                                        <li><a href="!#">상품명</a></li>
-                                        <li><a href="!#">낮은가격</a></li>
-                                        <li><a href="!#">높은가격</a></li>
-                                        <li><a href="!#">인기상품</a></li>
-                                        <li><a href="!#">사용후기</a></li>
-                                        <li><a href="!#">좋아요</a></li>
-                                    </ul>
-                                </div>
+                                <a onClick={onClickSortBy} href="!#"><span>정렬 기준</span></a>
+                                {
+                                    isSortBy &&
+                                    <div>
+                                        <ul>
+                                            <li><a href="!#">신상품</a></li>
+                                            <li><a href="!#">상품명</a></li>
+                                            <li><a href="!#">낮은가격</a></li>
+                                            <li><a href="!#">높은가격</a></li>
+                                            <li><a href="!#">인기상품</a></li>
+                                            <li><a href="!#">사용후기</a></li>
+                                            <li><a href="!#">좋아요</a></li>
+                                        </ul>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div className="content-list">

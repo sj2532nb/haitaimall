@@ -31,18 +31,18 @@
 			UserDAO userDAO = new UserDAO();
 			int result = userDAO.signup(UserDTO);
 			if(result==-1){				
-	%>			
+	%>
 				<script>
 					alert("이미 존재하는 아이디 입니다.");
 					history.go(-1);
 				</script>
-	<%	
+	<%
 			}
 			else {
-	%>			
+	%>
 				<script>
 					alert("회원가입 성공");
-					location.href="./index.jsp";
+					location.href="./signIn.jsp";
 				</script>
 	<%	
 			}

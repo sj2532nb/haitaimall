@@ -61,10 +61,10 @@ export default function HeaderComponent(){
                                 </div>
                                 <div className="row1-nav">
                                     <ul>
-                                        <li><Link to='/signup'><span>회원가입</span><i>+1,000P</i></Link></li>
-                                        <li><Link to='/signin'><span>로그인</span></Link></li>
+                                        <li><a href="http://localhost:8080/member/signUp.jsp"><span>회원가입</span><i>+1,000P</i></a></li>
+                                        <li><a href="http://localhost:8080/member/signIn.jsp"><span>로그인</span></a></li>
                                         <li><a href="!#"><span>장바구니</span><em>2</em></a></li>
-                                        <li><Link to='/mypage'><span>마이페이지</span></Link></li>
+                                        <li><a href="http://localhost:8080/member/update.jsp"><span>마이페이지</span></a></li>
                                         <li><a href="!#"><span>고객센터</span></a></li>
                                     </ul>
                                 </div>
@@ -106,18 +106,18 @@ export default function HeaderComponent(){
                             <div className="all-menu-container">
                                 <div className="left">
                                     <ul className='col1'>
-                                        <li><a href="!#"><span>선물하기🎁</span></a></li>
-                                        <li><a href="!#"><span>캐릭터</span></a></li>
-                                        <li><a href="!#"><span>이벤트</span></a></li>
-                                        <li><a href="!#"><span>레시피</span></a></li>
+                                        <li><Link to='/sub4'><span>선물하기🎁</span></Link></li>
+                                        <li><Link to='/sub5'><span>캐릭터</span></Link></li>
+                                        <li><Link to='/sub6'><span>이벤트</span></Link></li>
+                                        <li><Link to='/sub7'><span>레시피</span></Link></li>
                                     </ul>
                                     <ul className='col2'>
-                                        <li><a href="!#"><span>NEW & HOT</span></a></li>
+                                        <li><Link to='/sub1'><span>NEW & HOT</span></Link></li>
                                         <li><a href="!#">NEW</a></li>
                                         <li><a href="!#">HOT</a></li>
                                     </ul>
                                     <ul className='col3'>
-                                        <li><a href="!#"><span>골라담기</span></a></li>
+                                        <li><Link to='/sub2'><span>골라담기</span></Link></li>
                                         <li><a href="!#">비스켓</a></li>
                                         <li><a href="!#">스낵</a></li>
                                         <li><a href="!#">초코</a></li>
@@ -126,7 +126,7 @@ export default function HeaderComponent(){
                                         <li><a href="!#">묶음상품</a></li>
                                     </ul>
                                     <ul className='col4'>
-                                        <li><a href="!#"><span>선물세트</span></a></li>
+                                        <li><Link to='/sub3'><span>선물세트</span></Link></li>
                                         <li><a href="!#">종합선물세트</a></li>
                                         <li><a href="!#">간식선물세트</a></li>
                                         <li><a href="!#">어린이 만들기세트</a></li>

@@ -2,6 +2,21 @@ import React from 'react';
 import './scss/sub4.scss';
 
 export default function Sub4Component(){
+
+    const [isSortBy, setIsSortBy] = React.useState(false);
+
+    const onClickSortBy=(e)=>{
+        e.preventDefault();
+        if(isSortBy===true){
+            setIsSortBy(false);
+        }
+        else{
+            setIsSortBy(true);
+        }
+    }
+
+
+
     return (
         <div id='sub4'>
             <div className="container">
@@ -23,18 +38,21 @@ export default function Sub4Component(){
                             </div>
                             <p><strong>8</strong>개</p>
                             <div className="sort-by">
-                                <a href="!#"><span>정렬 기준</span></a>
-                                <div>
-                                    <ul>
-                                        <li><a href="!#">신상품</a></li>
-                                        <li><a href="!#">상품명</a></li>
-                                        <li><a href="!#">낮은가격</a></li>
-                                        <li><a href="!#">높은가격</a></li>
-                                        <li><a href="!#">인기상품</a></li>
-                                        <li><a href="!#">사용후기</a></li>
-                                        <li><a href="!#">좋아요</a></li>
-                                    </ul>
-                                </div>
+                                <a onClick={onClickSortBy} href="!#"><span>정렬 기준</span></a>
+                                {
+                                    isSortBy &&
+                                    <div>
+                                        <ul>
+                                            <li><a href="!#">신상품</a></li>
+                                            <li><a href="!#">상품명</a></li>
+                                            <li><a href="!#">낮은가격</a></li>
+                                            <li><a href="!#">높은가격</a></li>
+                                            <li><a href="!#">인기상품</a></li>
+                                            <li><a href="!#">사용후기</a></li>
+                                            <li><a href="!#">좋아요</a></li>
+                                        </ul>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div className="content-list">
