@@ -1,7 +1,35 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 import './scss/sub7.scss';
 
 export default function Sub7Component(){
+
+    const [state, setState] = React.useState({
+        recipe:[]
+    });
+
+    React.useEffect(()=>{
+
+        axios({
+            url: './data/sub/sub7.json',
+            method:'GET'
+        })
+        .then((res)=>{
+            if(res.status===200){
+                setState({
+                    ...state,
+                    recipe: res.data.recipe
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(`err` + err);
+        });
+
+    },[]);
+
+
     return (
         <div id='sub7'>
             <div className="container">
@@ -11,123 +39,25 @@ export default function Sub7Component(){
                     </div>
                     <div className="content">
                         <ul>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/80ec02ff0a35d55629f259cee2e25d7d.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">허니버터칩 오지치즈후라이 진짜 오짐</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/a94d797442b1315b05c4f54633cfb494.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">에이스로 만든 티라미수</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/185463c4d91835c752ab79857bf787fd.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">웨하스로 만드는 시원달콤한 파르페</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/80ec02ff0a35d55629f259cee2e25d7d.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">허니버터칩 오지치즈후라이 진짜 오짐</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/a94d797442b1315b05c4f54633cfb494.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">에이스로 만든 티라미수</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/185463c4d91835c752ab79857bf787fd.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">웨하스로 만드는 시원달콤한 파르페</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/80ec02ff0a35d55629f259cee2e25d7d.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">허니버터칩 오지치즈후라이 진짜 오짐</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/a94d797442b1315b05c4f54633cfb494.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">에이스로 만든 티라미수</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/185463c4d91835c752ab79857bf787fd.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">웨하스로 만드는 시원달콤한 파르페</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/80ec02ff0a35d55629f259cee2e25d7d.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">허니버터칩 오지치즈후라이 진짜 오짐</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/a94d797442b1315b05c4f54633cfb494.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">에이스로 만든 티라미수</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/185463c4d91835c752ab79857bf787fd.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">웨하스로 만드는 시원달콤한 파르페</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/80ec02ff0a35d55629f259cee2e25d7d.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">허니버터칩 오지치즈후라이 진짜 오짐</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/a94d797442b1315b05c4f54633cfb494.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">에이스로 만든 티라미수</a></h3>
-                                </div>
-                            </li>
+                            {
+                                state.recipe.map((item, idx)=>{
+                                    return(
+                                        <li key={idx}>
+                                            <a href="!#">
+                                                <figure><img src={item.src} alt="" /></figure>
+                                            </a>
+                                            <div>
+                                                <h3><a href="!#">{item.title}</a></h3>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+                            }
                         </ul>
                         <div className="pagenation">
-                            <a href="!#"><img src="./img/btn_page_prev.gif" alt="" /></a>
+                            <a href="!#"><img className='prev-btn' src="./img/bg_select_arrow.png" alt="" /></a>
                             <a href="!#">1</a>
-                            <a href="!#"><img src="./img/btn_page_next.gif" alt="" /></a>
+                            <a href="!#"><img className='next-btn' src="./img/bg_select_arrow.png" alt="" /></a>
                         </div>
                     </div>
                     <form>

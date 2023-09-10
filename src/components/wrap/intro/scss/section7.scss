@@ -39,8 +39,18 @@
                         a{
                             position: relative;
                             figure{
+                                display: block;
+                                position: relative;
                                 img{
-                                    width: auto;
+                                    width: 100%;
+                                }
+                            }
+                            .new-img{
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                img{
+                                    width: 100%;
                                 }
                             }
                             .cart-img{
@@ -116,9 +126,21 @@
                                     font-size: 13px;
                                 }
                             }
+                            strong{
+                                display: block;
+                                color: #208e38;
+                                font-size: 14px;
+                                margin: 8px 0 0 0;
+                                font-weight: 300;
+                                line-height: 140%;
+                                em{
+                                    font-weight: 700;
+                                    letter-spacing: -0.14px;
+                                }
+                            }
                             b{
                                 display: block;
-                                margin: 8px 0 5px 0;
+                                margin: 0 0 5px 0;
                                 font-size: 12px;
                                 line-height: 140%;
                                 color: #898989;

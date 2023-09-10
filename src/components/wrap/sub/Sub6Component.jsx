@@ -1,7 +1,35 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 import './scss/sub6.scss';
 
 export default function Sub6Component(){
+
+    const [state, setState] = React.useState({
+        event:[]
+    });
+
+    React.useEffect(()=>{
+
+        axios({
+            url: './data/sub/sub6.json',
+            method:'GET'
+        })
+        .then((res)=>{
+            if(res.status===200){
+                setState({
+                    ...state,
+                    event: res.data.event
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(`err` + err);
+        });
+
+    },[]);
+
+
     return (
         <div id='sub6'>
             <div className="container">
@@ -22,37 +50,25 @@ export default function Sub6Component(){
                     </div>
                     <div className="content">
                         <ul>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/b7f7fc78607356780dc90a355f5b2a71.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">해태몰 선물하기 오픈 이벤트</a></h3>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/3cc2fbd396ad46f0c5f0360745f12f02.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">마케팅 수신동의 시 적립금 증정 이벤트</a></h3>
-                                    <p>참여 : [2]</p>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/2b32baef1f3f1efca39e448480a5dc52.jpg" alt="" /></figure>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">해태몰 회원만을 위한 혜택 안내</a></h3>
-                                    <p>참여 : [2]</p>
-                                </div>
-                            </li>
+                            {
+                                state.event.map((item, idx)=>{
+                                    return(
+                                        <li key={idx}>
+                                            <a href="!#">
+                                                <figure><img src={item.src} alt="" /></figure>
+                                            </a>
+                                            <div>
+                                                <h3><a href="!#">{item.title}</a></h3>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+                            }
                         </ul>
                         <div className="pagenation">
-                            <a href="!#"><img src="./img/btn_page_prev.gif" alt="" /></a>
+                            <a href="!#"><img className='prev-btn' src="./img/bg_select_arrow.png" alt="" /></a>
                             <a href="!#">1</a>
-                            <a href="!#"><img src="./img/btn_page_next.gif" alt="" /></a>
+                            <a href="!#"><img className='next-btn' src="./img/bg_select_arrow.png" alt="" /></a>
                         </div>
                     </div>
                     <form>

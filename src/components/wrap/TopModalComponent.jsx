@@ -2,7 +2,12 @@ import React from 'react';
 import $ from 'jquery';
 import './scss/top_modal.scss';
 
-export default function TopModalComponent(){
+export default function TopModalComponent({topModalClose}){
+
+    const onClickTopModalClose=(e)=>{
+        e.preventDefault();
+        topModalClose('yes', 1); // yes,  1일 쿠키 전달
+    }
 
     React.useEffect(()=>{
 
@@ -54,7 +59,7 @@ export default function TopModalComponent(){
                     </div>
                 </div>
             </div>
-            <a className='top-modal-close-btn' href="!#"><img src="./img/icon-close.svg" alt="" /></a>
+            <a onClick={onClickTopModalClose} className='top-modal-close-btn' href="!#"><img src="./img/icon-close.svg" alt="" /></a>
         </div>
     );
 };

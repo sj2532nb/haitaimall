@@ -1,7 +1,34 @@
 import React from 'react';
+import axios from 'axios';
 import './scss/section5.scss';
 
 export default function Section5Component(){
+
+    const [state, setState] = React.useState({
+        introBest: []
+    });
+
+    React.useEffect(()=>{
+
+        axios({
+            url: './data/intro/section5.json',
+            method:'GET'
+        })
+        .then((res)=>{
+            if(res.status===200){
+                setState({
+                    ...state,
+                    introBest: res.data.intro_best
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(`err` + err);
+        });
+
+    },[]);
+
+
     return (
         <section id="section5">
             <div className="container">
@@ -11,54 +38,26 @@ export default function Section5Component(){
                     </div>
                     <div className="content">
                         <ul>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/ad33ccde5ec8fda252649b32c5540e51.jpg" alt="" /></figure>
-                                    <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">2023년 행복 선물세트</a></h3>
-                                    <span className='rate-price'>32<em>% </em></span><span className='sale-price'>30,000<em>원</em></span><span className='price'>43,800<em>원</em></span>
-                                    <br />
-                                    <em>달달한</em><em>선물세트</em>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/20f6870718b04cbe6c3df07acb40f898.jpg" alt="" /></figure>
-                                    <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">[만두]명절세트</a></h3>
-                                    <span className='rate-price'>25<em>% </em></span><span className='sale-price'>30,000<em>원</em></span><span className='price'>39,750<em>원</em></span>
-                                    <br />
-                                    <em>명절선물</em><em>푸짐해요</em>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/c7de00613bbdef7fb346353aa0f67f7d.jpg" alt="" /></figure>
-                                    <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">홈런볼 모음전</a></h3>
-                                    <span className='rate-price'>20<em>% </em></span><span className='sale-price'>12,200<em>원</em></span><span className='price'>15,300<em>원</em></span>
-                                    <br />
-                                    <em>대한민국 No1</em><em> 최대판매</em>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="!#">
-                                    <figure><img src="./img/fc43630f39ae0c125c33d4c9f1ecc84a.jpg" alt="" /></figure>
-                                    <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                </a>
-                                <div>
-                                    <h3><a href="!#">에이스 모음전</a></h3>
-                                    <span className='rate-price'>20<em>% </em></span><span className='sale-price'>15,300<em>원</em></span><span className='price'>19,200<em>원</em></span>
-                                    <br />
-                                    <em>커피와함께</em><em>뉴욕치즈케익</em>
-                                </div>
-                            </li>
+                            {
+                                state.introBest.map((item, idx)=>{
+                                    return(
+                                        <li key={idx}>
+                                            <a href="!#">
+                                                <figure><img src={item.src} alt="" /></figure>
+                                                <span className='new-img'>{item.new===""?``:<img src="./img/image_custom_316252116938702.png" alt="" />}</span>
+                                                <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
+                                            </a>
+                                            <div>
+                                                <h3><a href="!#">{item.title}</a></h3>
+                                                <span className='rate-price'>{item.discount_rate}<em>% </em></span><span className='sale-price'>{item.cost_price}<em>원</em></span><span className='price'>{item.product_price}<em>원</em></span>
+                                                {item.discount_price===""?``:<strong>쿠폰 적용시 <em>{item.discount_price}원</em></strong>}
+                                                <b>{item.comment}</b>
+                                                <em>{item.tag1}</em><em>{item.tag2}</em>
+                                            </div>
+                                        </li>
+                                    )
+                                })
+                            }
                         </ul>
                     </div>
                 </div>

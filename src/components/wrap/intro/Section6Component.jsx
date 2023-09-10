@@ -1,8 +1,34 @@
 import React from 'react';
 import './scss/section6.scss';
 import $ from 'jquery';
+import axios from 'axios';
 
 export default function Section6Component(){
+
+    const [state, setState] = React.useState({
+        sec6Slide:[]
+    });
+
+    React.useEffect(()=>{
+
+        axios({
+            url: './data/intro/section6.json',
+            method:'GET'
+        })
+        .then((res)=>{
+            if(res.status===200){
+                setState({
+                    ...state,
+                    sec6Slide: res.data.sec6_slide
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(`err` + err);
+        });
+
+    },[]);
+
 
     React.useEffect(()=>{
 
@@ -63,9 +89,17 @@ export default function Section6Component(){
                         <div className="slide-container">
                             <div className="slide-view">
                                 <ul className="slide-wrap">
-                                    <li className="slide slide2"><a href="!#"><img src="./img/bn_main2_1.jpg" alt="" /></a></li>
-                                    <li className="slide slide1"><a href="!#"><img src="./img/bn_main2_1.jpg" alt="" /></a></li>
-                                    <li className="slide slide2"><a href="!#"><img src="./img/bn_main2_1.jpg" alt="" /></a></li>
+                                    {
+                                        state.sec6Slide.map((item, idx)=>{
+                                            return(
+                                                <li className="slide slide1" key={idx}>
+                                                    <a href="!#">
+                                                        <img src={item.src} alt="" />
+                                                    </a>
+                                                </li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </div>

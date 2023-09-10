@@ -81,10 +81,17 @@
                                     border-left: 5px solid transparent;
                                     border-bottom: 5px solid #aaaaaa;
                                     transform: rotate(45deg);
+                                    transition: all 0.2s ease-in-out;
                                 }
                                 span{
                                     vertical-align: top;
                                     color: #222;
+                                }
+                                &.on{
+                                    &:after{
+                                        border-bottom-color: #000;
+                                        transform: rotate(-315deg);
+                                    }
                                 }
                             }
                             div{
@@ -151,6 +158,7 @@
                                 border-left: 5px solid transparent;
                                 border-bottom: 5px solid #aaaaaa;
                                 transform: rotate(45deg);
+                                transition: all 0.2s ease-in-out;
                             }
                             span{
                                 vertical-align: top;
@@ -158,6 +166,12 @@
                                 font-size: 12px;
                                 line-height: 38px;
                                 font-weight: 300;
+                            }
+                            &.on{
+                                &:after{
+                                    border-bottom-color: #000;
+                                    transform: rotate(-315deg);
+                                }
                             }
                         }
                         div{
@@ -210,19 +224,6 @@
                             margin: 0 10px 4% 10px;
                             text-align: left;
                             vertical-align: top;
-                            &:nth-of-type(1),
-                            &:nth-of-type(2),
-                            &:nth-of-type(3),
-                            &:nth-of-type(4),
-                            &:nth-of-type(6),
-                            &:nth-of-type(7),
-                            &:nth-of-type(9),
-                            &:nth-of-type(10),
-                            &:nth-of-type(12),
-                            &:nth-of-type(13),
-                            &:nth-of-type(14),
-                            &:nth-of-type(15){a{figure{&::after{background-image: url(../../../../../public/img/image_custom_316252116938702.png);}}}}
-                            &:nth-of-type(5){a{figure{&::after{background-image: url(../../../../../public/img/image_custom_816842903765087.png);}}}}
                             &:hover{
                                 .cart-img{
                                     bottom: 15px;
@@ -234,17 +235,16 @@
                                 figure{
                                     display: block;
                                     position: relative;
-                                    &::after{
-                                        content: '';
-                                        position: absolute;
-                                        top: 0;
-                                        left: 0;
-                                        width: 100%;
-                                        height: 100%;
-                                        background: url() no-repeat 100% 0;
-                                    }
                                     img{
-                                        width: auto;
+                                        width: 100%;
+                                    }
+                                }
+                                .new-img{
+                                    position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    img{
+                                        width: 100%;
                                     }
                                 }
                                 .cart-img{
@@ -332,22 +332,36 @@
                                         letter-spacing: -0.14px;
                                     }
                                 }
-                                b{
-                                    display: block;
-                                    margin: 0 0 5px 0;
-                                    font-size: 12px;
-                                    line-height: 140%;
-                                    color: #898989;
+                                .box{
+                                    b{
+                                        display: block;
+                                        margin: 0 0 5px 0;
+                                        font-size: 12px;
+                                        line-height: 140%;
+                                        color: #898989;
+                                    }
+                                    >em{
+                                        display: inline-block;
+                                        font-size: 11px;
+                                        line-height: 18px;
+                                        padding: 0 5px;
+                                        margin: 5px 3px 9px 0;
+                                        background: #f5f6f9;
+                                        color: #191a1d;
+                                        font-weight: 300;
+                                    }
                                 }
-                                >em{
-                                    display: inline-block;
+                                .soldout-txt{
+                                    display: block;
+                                    width: 32px;
                                     font-size: 11px;
                                     line-height: 18px;
                                     padding: 0 5px;
-                                    margin: 5px 3px 9px 0;
-                                    background: #f5f6f9;
-                                    color: #191a1d;
+                                    margin: 13px 3px 3px 0;
+                                    color: #fff;
+                                    background: #000;
                                     font-weight: 300;
+                                    border: 1px solid #000;
                                 }
                             }
                         }
@@ -358,9 +372,20 @@
                 margin: 30px 0;
                 text-align: center;
                 a{
-                    margin: 0 7px;
+                    display: inline-block;
+                    width: 23px;
+                    height: 23px;
+                    margin: 0 5px;
                     img{
-                        width: auto;
+                        width: 100%;
+                        margin: 1px 0 0 0;
+                        &.prev-btn{
+                            transform: rotate(90deg);
+                        }
+                        &.next-btn{
+                            transform: rotate(-90deg);
+                            margin: -15px 0 0 0;
+                        }
                     }
                 }
             }

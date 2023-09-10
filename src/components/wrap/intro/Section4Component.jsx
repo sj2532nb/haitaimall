@@ -1,12 +1,38 @@
 import React from 'react';
 import $ from 'jquery';
 import './scss/section4.scss';
+import axios from 'axios';
 
 export default function Section4Component(){
+
+    const [state, setState] = React.useState({
+        sec4Slide:[]
+    });
+
+    React.useEffect(()=>{
+
+        axios({
+            url: './data/intro/section4.json',
+            method:'GET'
+        })
+        .then((res)=>{
+            if(res.status===200){
+                setState({
+                    ...state,
+                    sec4Slide: res.data.sec4_slide
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(`err` + err);
+        });
+
+    },[]);
 
     React.useEffect(()=>{
 
         const $slideWrap = $('#section4 .slide-wrap');
+        const $pageBtn = $('#section4 .page-btn');
         let cnt=0;
         let setId=0;
 
@@ -16,6 +42,7 @@ export default function Section4Component(){
                 if(cnt<0) cnt=2;
                 $slideWrap.stop().animate({left: `${-100*cnt}%`},0);
             });
+            pageNation();
         }
 
         function prevCount(){
@@ -34,6 +61,22 @@ export default function Section4Component(){
         }
         autoTimer();
 
+        function pageNation(){
+            $pageBtn.removeClass(`on`);
+            $pageBtn.eq(cnt>2? 0:cnt).addClass(`on`);
+        }
+
+        $pageBtn.each(function(idx){
+            $(this).on({
+                click(e){
+                    e.preventDefault();
+                    clearInterval(setId);
+                    cnt=idx;
+                    mainSlide();
+                }
+            });
+        });
+
     },[]);
 
 
@@ -46,11 +89,17 @@ export default function Section4Component(){
                             <div className="slide-container">
                                 <div className="slide-view">
                                     <ul className="slide-wrap">
-                                        <li className="slide slide3"><a href="!#"><img src="./img/bn_main1_3.jpg" alt="" /></a></li>
-                                        <li className="slide slide1"><a href="!#"><img src="./img/bn_main1_1.jpg" alt="" /></a></li>
-                                        <li className="slide slide2"><a href="!#"><img src="./img/bn_main1_2.jpg" alt="" /></a></li>
-                                        <li className="slide slide3"><a href="!#"><img src="./img/bn_main1_3.jpg" alt="" /></a></li>
-                                        <li className="slide slide1"><a href="!#"><img src="./img/bn_main1_1.jpg" alt="" /></a></li>
+                                        {
+                                            state.sec4Slide.map((item, idx)=>{
+                                                return(
+                                                    <li className="slide slide1" key={idx}>
+                                                        <a href="!#">
+                                                            <img src={item.src} alt="" />
+                                                        </a>
+                                                    </li>
+                                                )
+                                            })
+                                        }
                                     </ul>
                                 </div>
                             </div>

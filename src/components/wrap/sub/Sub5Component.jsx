@@ -1,14 +1,72 @@
 import React from 'react';
 import $ from 'jquery';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 import './scss/sub5.scss';
 
 export default function Sub5Component(){
+
+    const [allCate, setAllCate] = React.useState(false);
+    const [sortBy, setSortBy] = React.useState(false);
+    const [state, setState] = React.useState({
+        sub5Slide: [],
+        character:[],
+        n:0
+    });
+
+    React.useEffect(()=>{
+
+        axios({
+            url: './data/sub/sub5.json',
+            method:'GET'
+        })
+        .then((res)=>{
+            if(res.status===200){
+                setState({
+                    ...state,
+                    sub5Slide: res.data.sub5_slide,
+                    character: res.data.character,
+                    n: res.data.character.length
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log(`err` + err);
+        });
+
+    },[]);
+
+
+    const onMouseEnterAllCate=(e)=>{
+        setAllCate(true);
+    }
+
+    const onMouseLeaveAllCate=(e)=>{
+        setAllCate(false);
+    }
+
+    const onMouseEnterSortBy=(e)=>{
+        setSortBy(true);
+    }
+
+    const onMouseLeaveSortBy=(e)=>{
+        setSortBy(false);
+    }
+
+    const onClickAllCate=(e)=>{
+        e.preventDefault();
+    }
+
+    const onClickSortBy=(e)=>{
+        e.preventDefault();
+    }
 
     React.useEffect(()=>{
 
         const $slideWrap = $('#sub5 .slide-wrap');
         const $prevBtn = $('#sub5 .prev-btn');
         const $nextBtn = $('#sub5 .next-btn');
+        const $pageBtn = $('#sub5 .page-btn');
         let cnt=0;
         let setId=0;
 
@@ -18,6 +76,7 @@ export default function Sub5Component(){
                 if(cnt<0) cnt=6;
                 $slideWrap.stop().animate({left: `${-100*cnt}%`},0);
             });
+            pageNation();
         }
 
         function prevCount(){
@@ -52,6 +111,22 @@ export default function Sub5Component(){
             }
         })
 
+        function pageNation(){
+            $pageBtn.removeClass(`on`);
+            $pageBtn.eq(cnt>6? 0:cnt).addClass(`on`);
+        }
+
+        $pageBtn.each(function(idx){
+            $(this).on({
+                click(e){
+                    e.preventDefault();
+                    clearInterval(setId);
+                    cnt=idx;
+                    mainSlide();
+                }
+            });
+        });
+
     },[]);
 
 
@@ -63,15 +138,17 @@ export default function Sub5Component(){
                         <div className="slide-container">
                             <div className="slide-view">
                                 <ul className="slide-wrap">
-                                    <li className="slide slide7"><a href="!#"><img src="./img/c04.jpg" alt="" /></a></li>
-                                    <li className="slide slide1"><a href="!#"><img src="./img/c01.jpg" alt="" /></a></li>
-                                    <li className="slide slide2"><a href="!#"><img src="./img/c02.jpg" alt="" /></a></li>
-                                    <li className="slide slide3"><a href="!#"><img src="./img/c05.jpg" alt="" /></a></li>
-                                    <li className="slide slide4"><a href="!#"><img src="./img/c03.jpg" alt="" /></a></li>
-                                    <li className="slide slide5"><a href="!#"><img src="./img/c06.jpg" alt="" /></a></li>
-                                    <li className="slide slide6"><a href="!#"><img src="./img/c07.jpg" alt="" /></a></li>
-                                    <li className="slide slide7"><a href="!#"><img src="./img/c04.jpg" alt="" /></a></li>
-                                    <li className="slide slide1"><a href="!#"><img src="./img/c01.jpg" alt="" /></a></li>
+                                    {
+                                        state.sub5Slide.map((item, idx)=>{
+                                            return(
+                                                <li className="slide slide1" key={idx}>
+                                                    <a href="!#">
+                                                        <img src={item.src} alt="" />
+                                                    </a>
+                                                </li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -110,462 +187,82 @@ export default function Sub5Component(){
                     <div className="content">
                         <div className="content-title">
                             <div className="category-box">
-                                <p><a href="!#">캐릭터</a></p>
+                                <p><Link to="/sub5" target='_top'>캐릭터</Link></p>
                                 <i>/</i>
-                                <div className="sub-category">
-                                    <a href="!#"><span>모두보기</span></a>
-                                    <div>
-                                        <ul>
-                                            <li><a href="!#">모두보기</a></li>
-                                            <li><a href="!#">허비</a></li>
-                                            <li><a href="!#">티토</a></li>
-                                            <li><a href="!#">맛깨비</a></li>
-                                            <li><a href="!#">예쓰</a></li>
-                                            <li><a href="!#">차유식</a></li>
-                                            <li><a href="!#">RO(로)</a></li>
-                                            <li><a href="!#">맘두</a></li>
-                                        </ul>
-                                    </div>
+                                <div onMouseLeave={onMouseLeaveAllCate} className="sub-category">
+                                    <a className={allCate && 'on'} onMouseEnter={onMouseEnterAllCate} onClick={onClickAllCate} href="!#"><span>모두보기</span></a>
+                                    {
+                                        allCate && (
+                                            <div>
+                                                <ul>
+                                                    <li><Link to="/sub5" target='_top'>모두보기</Link></li>
+                                                    <li><a href="!#">허비</a></li>
+                                                    <li><a href="!#">티토</a></li>
+                                                    <li><a href="!#">맛깨비</a></li>
+                                                    <li><a href="!#">예쓰</a></li>
+                                                    <li><a href="!#">차유식</a></li>
+                                                    <li><a href="!#">RO(로)</a></li>
+                                                    <li><a href="!#">맘두</a></li>
+                                                </ul>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             </div>
-                            <p><strong>35</strong>개</p>
-                            <div className="sort-by">
-                                <a href="!#"><span>정렬 기준</span></a>
-                                <div>
-                                    <ul>
-                                        <li><a href="!#">신상품</a></li>
-                                        <li><a href="!#">상품명</a></li>
-                                        <li><a href="!#">낮은가격</a></li>
-                                        <li><a href="!#">높은가격</a></li>
-                                        <li><a href="!#">인기상품</a></li>
-                                        <li><a href="!#">사용후기</a></li>
-                                        <li><a href="!#">좋아요</a></li>
-                                    </ul>
-                                </div>
+                            <p><strong>{state.n}</strong>개</p>
+                            <div onMouseLeave={onMouseLeaveSortBy} className="sort-by">
+                                <a className={sortBy && 'on'} onMouseEnter={onMouseEnterSortBy} onClick={onClickSortBy} href="!#"><span>정렬 기준</span></a>
+                                {
+                                    sortBy && (
+                                        <div>
+                                            <ul>
+                                                <li><a href="!#">신상품</a></li>
+                                                <li><a href="!#">상품명</a></li>
+                                                <li><a href="!#">낮은가격</a></li>
+                                                <li><a href="!#">높은가격</a></li>
+                                                <li><a href="!#">인기상품</a></li>
+                                                <li><a href="!#">사용후기</a></li>
+                                                <li><a href="!#">좋아요</a></li>
+                                            </ul>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                         <div className="content-list">
                             <ul>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/3cf5520443fbd27a3e113be86077b3f0.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자가비 케첩맛 45g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>감자튀김</em><em>케첩맛</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/23ce6e81d8a93f0c01cfc96f7db31c6b.png" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">홈런볼바나나스플릿</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>2,000<em>원</em></span><span className='price'>2,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>1,600원</em></strong>
-                                        <em>바나나&딸기크림 쏘옥</em>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/8b317c6d383fb98a81a5ffd09e215659.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">자유시간 쿠키앤크림 30g</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>1,000<em>원</em></span><span className='price'>1,000<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>800원</em></strong>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="!#">
-                                        <figure><img src="./img/b8f076acb88170402868dccb56b55c86.jpg" alt="" /></figure>
-                                        <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
-                                    </a>
-                                    <div>
-                                        <h3><a href="!#">에이스 에스프레소 콘파냐</a></h3>
-                                        <span className='rate-price'>20<em>% </em></span><span className='sale-price'>4,800<em>원</em></span><span className='price'>4,800<em>원</em></span>
-                                        <strong>쿠폰 적용시 <em>3,840원</em></strong>
-                                        <b>쌉쌀한,커피맛에 크림을 더한</b>
-                                    </div>
-                                </li>
+                                {
+                                    state.character.map((item, idx)=>{
+                                        return(
+                                            <li key={idx}>
+                                                <a href="!#">
+                                                    <figure><img src={item.src} alt="" /></figure>
+                                                    <span className='new-img'>{item.new===""?``:<img src="./img/image_custom_316252116938702.png" alt="" />}</span>
+                                                    <span className='cart-img'><img src="./img/icon_cart.svg" alt="" /></span>
+                                                </a>
+                                                <div>
+                                                    <h3><a href="!#">{item.title}</a></h3>
+                                                    <span className='rate-price'>{item.discount_rate}<em>% </em></span><span className='sale-price'>{item.cost_price}<em>원</em></span><span className='price'>{item.product_price}<em>원</em></span>
+                                                    {item.discount_price===""?``:<strong>쿠폰 적용시 <em>{item.discount_price}원</em></strong>}
+                                                    {item.sold_out===""?
+                                                        <div className="box">
+                                                            <b>{item.comment}</b>
+                                                            <em>{item.tag1}</em><em>{item.tag2}</em>
+                                                        </div>
+                                                        :
+                                                        <span className='soldout-txt'>{item.sold_out}</span>}
+                                                </div>
+                                            </li>
+                                        )
+                                    })
+                                }
                             </ul>
                         </div>
                     </div>
                     <div className="pagenation">
-                        <a href="!#"><img src="./img/btn_page_prev.gif" alt="" /></a>
+                        <a href="!#"><img className='prev-btn' src="./img/bg_select_arrow.png" alt="" /></a>
                         <a href="!#">1</a>
-                        <a href="!#"><img src="./img/btn_page_next.gif" alt="" /></a>
+                        <a href="!#"><img className='next-btn' src="./img/bg_select_arrow.png" alt="" /></a>
                     </div>
                 </div>
             </div>

@@ -39,8 +39,18 @@
                         a{
                             position: relative;
                             figure{
+                                display: block;
+                                position: relative;
                                 img{
-                                    width: auto;
+                                    width: 100%;
+                                }
+                            }
+                            .new-img{
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                img{
+                                    width: 100%;
                                 }
                             }
                             .cart-img{
@@ -116,13 +126,32 @@
                                     font-size: 13px;
                                 }
                             }
+                            strong{
+                                display: block;
+                                color: #208e38;
+                                font-size: 14px;
+                                margin: 8px 0 0 0;
+                                font-weight: 300;
+                                line-height: 140%;
+                                em{
+                                    font-weight: 700;
+                                    letter-spacing: -0.14px;
+                                }
+                            }
+                            b{
+                                display: block;
+                                margin: 0 0 5px 0;
+                                font-size: 12px;
+                                line-height: 140%;
+                                color: #898989;
+                            }
                             >em{
                                 display: inline-block;
                                 font-size: 11px;
-                                line-height: 18.5px;
-                                padding: 0.5px 5px;
-                                margin: 13px 3px 9px 0;
-                                background: #e9e9e9;
+                                line-height: 18px;
+                                padding: 0 5px;
+                                margin: 5px 3px 9px 0;
+                                background: #f5f6f9;
                                 color: #191a1d;
                                 font-weight: 300;
                             }
