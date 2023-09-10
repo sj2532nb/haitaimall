@@ -5,6 +5,7 @@ import './scss/sub1.scss';
 
 export default function Sub1Component(){
 
+<<<<<<< HEAD
     const [allCate, setAllCate] = React.useState(false);
     const [sortBy, setSortBy] = React.useState(false);
     const [state, setState] = React.useState({
@@ -52,10 +53,32 @@ export default function Sub1Component(){
 
     const onClickAllCate=(e)=>{
         e.preventDefault();
+=======
+    const [isSubCate, setIsSubCate] = React.useState(false);
+    const [isSortBy, setIsSortBy] = React.useState(false);
+
+    const onClickSubCategory=(e)=>{
+        e.preventDefault();
+        if(isSubCate===true){
+            setIsSubCate(false);
+        }
+        else{
+            setIsSubCate(true);
+        }
+>>>>>>> 54712888cf7a00992f05cdb907dbd35a47a545e4
     }
 
     const onClickSortBy=(e)=>{
         e.preventDefault();
+<<<<<<< HEAD
+=======
+        if(isSortBy===true){
+            setIsSortBy(false);
+        }
+        else{
+            setIsSortBy(true);
+        }
+>>>>>>> 54712888cf7a00992f05cdb907dbd35a47a545e4
     }
 
 
@@ -78,6 +101,7 @@ export default function Sub1Component(){
                             <div className="category-box">
                                 <p><Link to="/sub1" target='_top'>NEW & HOT</Link></p>
                                 <i>/</i>
+<<<<<<< HEAD
                                 <div onMouseLeave={onMouseLeaveAllCate} className="sub-category">
                                     <a className={allCate && 'on'} onMouseEnter={onMouseEnterAllCate} onClick={onClickAllCate} href="!#"><span>모두보기</span></a>
                                     {
@@ -110,6 +134,38 @@ export default function Sub1Component(){
                                             </ul>
                                         </div>
                                     )
+=======
+                                <div className="sub-category">
+                                    <a onClick={onClickSubCategory} href="!#"><span>모두보기</span></a>
+                                    {
+                                        isSubCate &&
+                                        <div>
+                                            <ul>
+                                                <li><a href="!#">모두보기</a></li>
+                                                <li><a href="!#">NEW</a></li>
+                                                <li><a href="!#">HOT</a></li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <p><strong>35</strong>개</p>
+                            <div className="sort-by">
+                                <a onClick={onClickSortBy} href="!#"><span>정렬 기준</span></a>
+                                {
+                                    isSortBy &&
+                                    <div>
+                                        <ul>
+                                            <li><a href="!#">신상품</a></li>
+                                            <li><a href="!#">상품명</a></li>
+                                            <li><a href="!#">낮은가격</a></li>
+                                            <li><a href="!#">높은가격</a></li>
+                                            <li><a href="!#">인기상품</a></li>
+                                            <li><a href="!#">사용후기</a></li>
+                                            <li><a href="!#">좋아요</a></li>
+                                        </ul>
+                                    </div>
+>>>>>>> 54712888cf7a00992f05cdb907dbd35a47a545e4
                                 }
                             </div>
                         </div>

@@ -36,7 +36,7 @@
 %>			
 			<script>
 				alert("회원탈퇴 완료");
-				location.href="./index.jsp";
+				location.href="./signUp.jsp";
 			</script>			
 <%			
 		}
