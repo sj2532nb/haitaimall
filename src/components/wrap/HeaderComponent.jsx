@@ -90,17 +90,10 @@ export default function HeaderComponent(){
                                 </div>
                                 <div className="row1-nav">
                                     <ul>
-<<<<<<< HEAD
                                         <li><Link to='/signup'><span>회원가입</span><i>+1,000P</i></Link></li>
                                         <li><Link to='/signin'><span>로그인</span></Link></li>
                                         <li><a href="!#"><span>장바구니</span><em>{}</em></a></li>
                                         <li><Link to='/mypage'><span>마이페이지</span></Link></li>
-=======
-                                        <li><a href="http://localhost:8080/member/signUp.jsp"><span>회원가입</span><i>+1,000P</i></a></li>
-                                        <li><a href="http://localhost:8080/member/signIn.jsp"><span>로그인</span></a></li>
-                                        <li><a href="!#"><span>장바구니</span><em>2</em></a></li>
-                                        <li><a href="http://localhost:8080/member/update.jsp"><span>마이페이지</span></a></li>
->>>>>>> 54712888cf7a00992f05cdb907dbd35a47a545e4
                                         <li><a href="!#"><span>고객센터</span></a></li>
                                     </ul>
                                 </div>
